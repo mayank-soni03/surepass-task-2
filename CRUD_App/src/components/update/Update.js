@@ -5,7 +5,7 @@ import { UPDATE_ITEM } from '../../utils/constant';
 
 function Update({ status, handleClose, handleChange,
   submitUpdateForm, state }) {
-  const { title, description } = state;
+  const { id, firstName, lastName, contactNumber, email, age, dob, imageUrl } = state;
   return (
       <Modal show={status} onHide={handleClose} animation={true} centered>
         <Modal.Header closeButton className='modal-content_update'>
@@ -14,25 +14,91 @@ function Update({ status, handleClose, handleChange,
         <Modal.Body>
           <Form onSubmit={submitUpdateForm}>
             <Form.Group controlId="formBasicTitle">
-              <Form.Label>Title</Form.Label>
+              <Form.Label>Enter ID</Form.Label>
               <Form.Control
                 required
                 type="text"
-                placeholder="Enter Title"
-                name="title"
-                value={title || ''}
+                placeholder="Enter ID"
+                name="id"
+                value={id || ''}
                 onChange={handleChange}
               />
             </Form.Group>
 
             <Form.Group controlId="formBasicDescription">
-              <Form.Label>Description</Form.Label>
+              <Form.Label>Enter FirstName</Form.Label>
               <Form.Control
                 required
                 type="text"
-                placeholder="Enter Description"
-                name="description"
-                value={description || ''}
+                placeholder="Enter FirstName"
+                name="firstName"
+                value={firstName || ''}
+                onChange={handleChange}
+              />
+            </Form.Group>
+            <Form.Group controlId="formBasicDescription">
+              <Form.Label>Enter LastName</Form.Label>
+              <Form.Control
+                required
+                type="text"
+                placeholder="Enter LastName"
+                name="lastName"
+                value={lastName || ''}
+                onChange={handleChange}
+              />
+            </Form.Group>
+            <Form.Group controlId="formBasicDescription">
+              <Form.Label>Enter ContactNumber</Form.Label>
+              <Form.Control
+                required
+                type="text"
+                placeholder="Enter ContactNumber"
+                name="contactNumber"
+                value={contactNumber || ''}
+                onChange={handleChange}
+              />
+            </Form.Group>
+            <Form.Group controlId="formBasicDescription">
+              <Form.Label>Enter Email</Form.Label>
+              <Form.Control
+                required
+                type="text"
+                placeholder="Enter Email"
+                name="email"
+                value={email || ''}
+                onChange={handleChange}
+              />
+            </Form.Group>
+            <Form.Group controlId="formBasicDescription">
+              <Form.Label>Enter Age</Form.Label>
+              <Form.Control
+                required
+                type="text"
+                placeholder="Enter Age"
+                name="age"
+                value={age || ''}
+                onChange={handleChange}
+              />
+            </Form.Group>
+            <Form.Group controlId="formBasicDescription">
+              <Form.Label>Enter DOB</Form.Label>
+              <Form.Control
+                required
+                type="text"
+                placeholder="Enter dob"
+                name="dob"
+                value={dob || ''}
+                onChange={handleChange}
+              />
+            </Form.Group>
+            <Form.Group controlId="formBasicDescription">
+              <Form.Label>Enter Image URL</Form.Label>
+              <Form.Control
+                required
+                type="text"
+                placeholder="Enter Image URL"
+                name="imageUrl"
+                value={imageUrl || ''}
                 onChange={handleChange}
               />
             </Form.Group>
