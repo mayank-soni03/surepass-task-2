@@ -11,11 +11,12 @@ import {
   deleteItems
 } from "../../actions/crudActions";
 import Header from "../header/Header";
-import { Jumbotron, Container } from "react-bootstrap";
+import { Jumbotron } from "react-bootstrap";
 import Update from "../update/Update";
 import Create from "../create/Create";
 import Spinner from "../loader/Loader";
 import './home.scss';
+import axios from "axios";
 
 toast.configure({
   autoClose: 8000,
@@ -24,10 +25,14 @@ toast.configure({
 });
 function Home() {
   const [state, setState] = useState({
-    title: "",
-    description: "",
-    loading: false,
-    checkedArr: []
+    id: "",
+    firstName: "",
+    lastName: "",
+    contactNumber: "",
+    email: "",
+    age: "",
+    dob: "",
+    imageUrl: ""
   });
   const [status, setStatus] = useState({
     edit: false,
@@ -37,8 +42,18 @@ function Home() {
   const { lists } = useSelector(state => state.lists);
   const list = useSelector(state => state);
 
+  async function getUser() {
+    try {
+      const response = await axios.get("https://hub.dummyapis.com/employee?noofRecords=200&idStarts=1001");
+      console.log('@#@#@# Home Fetch API', response.data);
+      dispatch(getItems(response.data));
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   useEffect(() => {
-    dispatch(getItems());
+getUser();
   }, [dispatch]);
 
   const handleChange = e => {
@@ -46,20 +61,25 @@ function Home() {
     setState({ ...state, [name]: value });
   };
   const submitCreateForm = e => {
-    const { title, description } = state;
+    const { id, firstName, lastName, contactNumber, email, age, dob, imageUrl } = state;
 
     e.preventDefault();
     let obj = {
-      id: uuidv4(),
-      title,
-      description
+      id: id,
+      firstName,
+      lastName,
+      contactNumber,
+      email,
+      age,
+      dob,
+      imageUrl
     };
-    if (state.title !== '' && state.description !== '') {
+    if (state.id !== '' && state.firstName !== '' && state.lastName !== ''  && state.contactNumber !== '' && state.email !== '' && state.age !== '' && state.dob !== '' && state.imageUrl !== '') {
       setState({ ...state, loading: true });
       dispatch(addItem(obj));
       setTimeout(() => {
         if (!list.loading) {
-          setState({ ...state, title: "", description: "", loading: false });
+          setState({ ...state, id: "", firstName: "", lastName: "",  contactNumber: "", email: "", age: "", dob: '', imageUrl: "" });
           toast.success("Added Successfully");
         }
       }, 1000);
@@ -75,19 +95,24 @@ function Home() {
     dispatch(updateItem(state));
     setTimeout(() => {
       if (!list.loading) {
-        setState({ ...state, title: "", description: "", loading: false });
+        setState({ ...state, id: "", firstName: "", lastName: "",  contactNumber: "", email: "", age: "", dob: '', imageUrl: "" });
         toast.success("Successfully Updated");
       }
     }, 1000);
     setStatus({ ...status, edit: false });
   };
   const onHandleEdit = (list) => {
-    const { title, description, id } = list;
+    const {id, firstName, lastName, contactNumber, email, age, dob, imageUrl } = list;
     setState({
       ...state,
       id: id,
-      title: title,
-      description: description
+      firstName: firstName,
+      lastName: lastName,
+      contactNumber: contactNumber,
+      email: email,
+      age: age,
+      dob: dob,
+      imageUrl: imageUrl
     });
     setStatus({ ...status, edit: true });
   };
@@ -119,7 +144,7 @@ function Home() {
       <Header addHandle={addHandle} />
       {state.loading && <Spinner />}
       <div>
-        <Container>
+        {/* <Container> */}
           <Jumbotron>
             <ListItem lists={lists}
               onHandleEdit={onHandleEdit}
@@ -131,7 +156,7 @@ function Home() {
               handleAllChecked={handleAllChecked}
             />
           </Jumbotron>
-        </Container>
+        {/* </Container> */}
       </div>
       {status.edit ?
         <Update
