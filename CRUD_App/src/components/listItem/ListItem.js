@@ -1,36 +1,12 @@
 import React from "react";
-import { Table, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { Table } from "react-bootstrap";
 import { FaEdit, FaBook } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
-import { GrTooltip } from "react-icons/gr";
 
 import './listItem.scss';
 
 function ListItem({ lists, onHandleEdit, onDelete, onChecked,
   AnyChecked, handleAllChecked, deleteAll }) {
-
-  const renderTooltip = (list) => {
-    return (
-      <>
-        <span>{list.title.length > 15 ?
-          <OverlayTrigger
-            placement="top"
-            delay={{ show: 250, hide: 400 }}
-            overlay={
-              <Tooltip>
-                {list.title}
-              </Tooltip>
-            }>
-            <span className="tooltip-text">
-              {list.title.substring(0, 15).trim() + '...'}
-              <GrTooltip />
-            </span>
-          </OverlayTrigger>
-          : list.title}
-        </span>
-      </>
-    )
-  }
 
   const isCheckedMoreThanOne = lists.filter(list => list.completed)?.length <= 1;
 
@@ -41,7 +17,13 @@ function ListItem({ lists, onHandleEdit, onDelete, onChecked,
         <thead>
           <tr>
             <th><FaBook /></th>
-            <th>Title</th>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Contact Number</th>
+            <th>email</th>
+            <th>Age</th>
+            <th>DOB</th>
+            <th>Image</th>
             <th className="remove">Description</th>
             <th>
               <span className="action">Action</span>
@@ -60,8 +42,13 @@ function ListItem({ lists, onHandleEdit, onDelete, onChecked,
             lists.map((list) => (
               <tr key={list.id} className={list.completed ? 'selected' : ''}>
                 <td><FaBook /></td>
-                <td>{renderTooltip(list)}</td>
-                <td className="remove">{list.description.length > 20 ? list.description.substring(0, 20).trim() + '...' : list.description}</td>
+                <td>{list.id}</td>
+                <td>{list.firstName} {list.lastName}</td>
+                <td>{list.contactNumber}</td>
+                <td>{list.email}</td>
+                <td>{list.age}</td>
+                <td>{list.dob}</td>
+                <td><img src={list.imageUrl} /></td>
                 <td className="table_edit">
                   <div>
                     {isCheckedMoreThanOne && <FaEdit onClick={() => onHandleEdit(list)} />}
